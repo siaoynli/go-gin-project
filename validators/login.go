@@ -4,7 +4,6 @@
 
 package validators
 
-
 type LoginForm struct {
 	User     string `form:"user" validate:"required,min=5,max=20"`
 	Password string `form:"password" validate:"required,min=5,max=20"`

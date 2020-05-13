@@ -5,31 +5,23 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"go-gin-project/validators"
-
 )
 
 
 func Login(c *gin.Context) {
 	var loginForm validators.LoginForm
 
+	v := validators.New()
 	//绑定错误时候
-	if err:=c.ShouldBind(&loginForm);err != nil {
-		fmt.Println(err.Error())
-		c.JSON(500,gin.H{
-			"status":"http server error",
-			"error":err.Error(),
-		})
-		return
+	_, err := v.Bind(c, loginForm)
+	if err != nil {
+		c.JSON(500, gin.H{"status": "服务器内部错误"})
 	}
 
-	validators.New()
-	validated := validators.Validated(loginForm)
-	if  validated!= nil {
-		c.JSON(401, gin.H{"message":validated})
-	}
+
+
 	//后面登录逻辑
 	if loginForm.User == "user" && loginForm.Password == "password" {
 		c.JSON(200, gin.H{"status": "you are logged in"})
