@@ -4,10 +4,14 @@
 
 package main
 
-import "go-gin-project/bootstrap"
+import (
+     _ "go-gin-project/Bootstrap"
+     "go-gin-project/Routers"
+)
 
 func main(){
-    bootstrap.Run()
+    routers := Routers.InitRouter()
+    routers.Run(":8080")
 }
 
 
