@@ -4,7 +4,10 @@
 
 package Models
 
-import "log"
+import (
+	_ "github.com/go-sql-driver/mysql"
+	"log"
+)
 
 type UsersModel struct {
 	*BaseModel
@@ -24,7 +27,7 @@ func NewUserModel() *UsersModel {
 			BaseModel: dbDriver,
 		}
 	}
-	log.Fatal("usersModel工厂初始化失败")
+	log.Fatal("UsersModel工厂初始化失败")
 	return nil
 }
 

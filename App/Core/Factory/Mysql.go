@@ -6,6 +6,7 @@ package Factory
 
 import (
 	"database/sql"
+	"fmt"
 	"go-gin-project/App/Global/Errors"
 	"go-gin-project/App/Utils/Config"
 	"log"
@@ -25,6 +26,7 @@ func InitSqlDriver() *sql.DB {
 	SetMaxIdleConns := configFac.GetInt("Mysql.SetMaxIdleConns")
 	SetMaxOpenConns := configFac.GetInt("Mysql.SetMaxOpenConns")
 	SetConnMaxLifetime := configFac.GetDuration("Mysql.SetConnMaxLifetime")
+	fmt.Println(DbType, string(User)+":"+Pass+"@tcp("+Host+":"+Port+")/"+DataBase+"?parseTime=True&loc=Local&charset="+Charset)
 	db, err := sql.Open(DbType, string(User)+":"+Pass+"@tcp("+Host+":"+Port+")/"+DataBase+"?parseTime=True&loc=Local&charset="+Charset)
 	if err != nil {
 		log.Fatal(Errors.Errors_Db_SqlDriverInitFail)

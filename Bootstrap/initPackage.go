@@ -8,7 +8,6 @@ import (
 	"go-gin-project/App/Core"
 	"go-gin-project/App/Global/Errors"
 	"go-gin-project/App/Global/Variable"
-	"go-gin-project/App/Http/Request/RegisterValidator"
 	"log"
 	"os"
 )
@@ -20,5 +19,5 @@ func init(){
 		log.Fatal(Errors.Errors_BasePath)
 	}
 	Core.InitContainer()
-	RegisterValidator.RegisterValidator()
+
 }
