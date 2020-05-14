@@ -9,6 +9,8 @@ import (
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 	zhTranslations "github.com/go-playground/validator/v10/translations/zh"
+	"go-gin-project/App/Config/Consts"
+	"go-gin-project/App/Core/Factory"
 	"gopkg.in/ini.v1"
 	"log"
 	"reflect"
@@ -33,12 +35,7 @@ func NewValidator() *Validator {
 	if err != nil {
 		log.Fatalln(err.Error())
 	}
-	langFile := "./Resources/langs/zh_CN.ini"
-	cfg, err := ini.Load(langFile)
-	if err != nil {
-		log.Fatalln(err.Error())
-	}
-
+	cfg := Factory.Get(Consts.Validator_Prefix+"Lang").(*ini.File)
 	return &Validator{
 		validate: validate,
 		trans:    trans,
@@ -48,20 +45,31 @@ func NewValidator() *Validator {
 }
 
 func (v *Validator) Validated(validatorModel interface{}) *Validator {
-	v.validatorModel = validatorModel
-	err := v.validate.Struct(v.validatorModel)
+	v.validatorModel=validatorModel
+	err := v.validate.Struct(validatorModel)
 	if err != nil {
-		errs := err.(validator.ValidationErrors)
-		validType := reflect.TypeOf(v.validatorModel)
+		validType := reflect.TypeOf(validatorModel)
+		kind := reflect.TypeOf(validatorModel).Kind()
+		if kind == reflect.Ptr {
+			validType = validType.Elem()
+		}
+
+		//或者
+		//kind := reflect.TypeOf(validatorModel).Kind()
+		//validValue := reflect.ValueOf(validatorModel)
+		//if kind == reflect.Ptr {
+		//	validValue = validValue.Elem()
+		//}
+		//validType:=validValue.Type()
+
 		name := validType.Name()
+		errs := err.(validator.ValidationErrors)
 		for _, e := range errs {
 			field, _ := validType.FieldByName(e.Field())
 			//反射获取到表单字段
 			formField := field.Tag.Get("form")
-
 			//获取分区配置文件
 			langText := v.cfg.Section(name).Key(formField).String()
-
 			tranText := e.Translate(v.trans)
 			//如果翻译有内容，则替换
 			if len(langText) == 0 {
@@ -77,6 +85,7 @@ func (v *Validator) Validated(validatorModel interface{}) *Validator {
 				v.Error = tranText
 			}
 		}
+
 	}
 	return v
 }

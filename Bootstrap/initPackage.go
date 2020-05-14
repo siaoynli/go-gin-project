@@ -7,7 +7,7 @@ package Bootstrap
 import (
 	"go-gin-project/App/Config/Errors"
 	"go-gin-project/App/Config/Variable"
-	"go-gin-project/App/Core/Kernel"
+	"go-gin-project/App/Core"
 	"log"
 	"os"
 )
@@ -18,6 +18,6 @@ func init(){
 	} else {
 		log.Fatal(Errors.Errors_BasePath)
 	}
-	Kernel.RegisterKernel()
 
+	Core.InitContainer()
 }
