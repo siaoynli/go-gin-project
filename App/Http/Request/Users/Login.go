@@ -6,7 +6,7 @@ package Users
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-gin-project/App/Config/Consts"
+	"go-gin-project/App/Global/Consts"
 	"go-gin-project/App/Http/Controllers"
 	"go-gin-project/App/Http/Request"
 	"go-gin-project/App/Utils/Response"
@@ -30,7 +30,9 @@ func (l *Login) CheckParams(context *gin.Context) {
 	Validator :=Request.NewValidator()
 	if  err :=Validator.Validated(l).Error;err!= "" {
 		Response.ReturnJson(context, http.StatusBadRequest, Consts.Validator_ParamsCheck_Fail_Code, Consts.Validator_ParamsCheck_Fail_Msg, err)
+		return
 	}
+
 	//注册控制器
 	(&Controllers.Users{}).Login(context)
 }

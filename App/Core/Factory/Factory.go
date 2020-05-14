@@ -6,8 +6,8 @@ package Factory
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-gin-project/App/Config/Errors"
 	"go-gin-project/App/Core/Container"
+	"go-gin-project/App/Global/Errors"
 	"go-gin-project/App/Http/Request/Interface"
 	"log"
 	"reflect"
@@ -22,7 +22,7 @@ func Get(key string)  interface{} {
 	return nil
 }
 
-// 表单参数工厂
+// 表单参数校验工厂
 func Create(key string) func(context *gin.Context) {
 	if value := Container.CreateContainersFactory().Get(key); value != nil {
 		valueOf := reflect.ValueOf(value)

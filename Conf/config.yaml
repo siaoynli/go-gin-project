@@ -1,0 +1,35 @@
+APP_DEBUG: true
+
+DbType: 'mysql'
+Mysql:
+  Host: '127.0.0.1'
+  DataBase: 'db_stocks'
+  Port: 3306 #注意，非3306，请自行调整
+  Prefix: 'tb_'
+  User: 'root'
+  Pass: 'root'
+  Charset: 'utf8'
+  SetMaxIdleConns: 10
+  SetMaxOpenConns: 128
+  SetConnMaxLifetime: 60
+  PingFailRetryTimes: 3
+
+Redis:
+  Host: '127.0.0.1'
+  Port: 6379
+  Auth: ''
+  MaxIdle: 10
+  MaxActive: 1000
+  IdleTimeout: 60
+  IndexDb: 1
+
+FileUploadSetting:
+  Size: 32 #设置上传文件的最大值，单位：M
+  AllowMimeType: #允许的文件mime类型列表
+    - 'image/jpeg' #jpg、jpeg图片格式
+    - 'image/png' #png图片格式
+    - 'image/x-icon' #ico图片
+    - 'image/bmp' #bmp图片
+    - 'application/zip' #xlsx、docx、zip
+    - 'application/x-gzip' #tar.gz
+    - 'text/plain; charset=utf-8' #txt log json等文本文件

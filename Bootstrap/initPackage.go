@@ -5,9 +5,10 @@
 package Bootstrap
 
 import (
-	"go-gin-project/App/Config/Errors"
-	"go-gin-project/App/Config/Variable"
 	"go-gin-project/App/Core"
+	"go-gin-project/App/Global/Errors"
+	"go-gin-project/App/Global/Variable"
+	"go-gin-project/App/Http/Request/RegisterValidator"
 	"log"
 	"os"
 )
@@ -18,6 +19,6 @@ func init(){
 	} else {
 		log.Fatal(Errors.Errors_BasePath)
 	}
-
 	Core.InitContainer()
+	RegisterValidator.RegisterValidator()
 }

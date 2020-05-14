@@ -6,8 +6,7 @@ package Routers
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-gin-project/App/Config/Consts"
-	"go-gin-project/App/Core/Factory"
+	"go-gin-project/App/Utils/Helper"
 	"net/http"
 )
 
@@ -20,7 +19,7 @@ func InitRouter() *gin.Engine{
 	router.StaticFS("/dir", http.Dir("./Public"))    // 将Public目录内的文件列举展示
 	router.StaticFile("/readme", "./Public/readme.md") // 可以根据文件名绑定需要返回的文件名
 
-	router.POST("/login", Factory.Create(Consts.Validator_Prefix+"UsersLogin"))
+	router.POST("/login", Helper.Handler("UsersLogin"))
 
 	return router
 }
