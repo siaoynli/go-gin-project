@@ -6,9 +6,6 @@ package Helper
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"go-gin-project/App/Core/Factory"
-	"go-gin-project/App/Global/Consts"
 	"go-gin-project/App/Global/Variable"
 	"gopkg.in/ini.v1"
 	"log"
@@ -25,8 +22,4 @@ func LoadLang() *ini.File {
 	return cfg
 }
 
-
-func Handler(name string) func(*gin.Context){
-	return Factory.Create(Consts.Validator_Prefix+name)
-}
 

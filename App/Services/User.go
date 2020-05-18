@@ -5,19 +5,42 @@
 package Services
 
 import (
-	"go-gin-project/App/Models"
+	"go-gin-project/App/Models/UserModel"
 	"go-gin-project/App/Utils/MD5Cryt"
 )
 
 type UserService struct {
-
+	model *UserModel.UserModel
 }
 
 func NewUserService() *UserService {
-	return &UserService{}
+	user:=UserModel.NewUserModel()
+	return &UserService{
+		model:user,
+	}
 }
 
-func (u *UserService) Store(name string, pass string, real_name string, phone string, remark string) bool {
-	pass = MD5Cryt.Base64Md5(pass) // 预先处理密码加密，然后存储在数据库
-	return Models.NewUserModel().Store(name, pass, real_name, phone, remark)
+func (u *UserService) All() []*UserModel.UserModel  {
+	return u.model.All()
+}
+
+
+
+func (u *UserService) Create(model *UserModel.CreateUsers) bool {
+	// 预先处理密码加密，然后存储在数据库
+	//一些逻辑
+	model.Password = MD5Cryt.Base64Md5(model.Password)
+	model.Status=1
+	return model.Create()
+}
+
+func (u *UserService) First(id uint)  *UserModel.UserModel {
+
+	model:=UserModel.NewUserModel()
+	u.model= model.First(id)
+	return  u.model
+}
+
+func (u *UserService) Delete()  {
+     u.model.Delete()
 }

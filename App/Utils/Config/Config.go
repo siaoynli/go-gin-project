@@ -13,7 +13,6 @@ import (
 
 // 创建一个yaml配置文件工厂
 func CreateYamlFactory() *ConfigYml {
-
 	yaml_config := viper.New()
 	yaml_config.AddConfigPath(Variable.BASE_PATH + "/Conf")
 	// 需要读取的文件名

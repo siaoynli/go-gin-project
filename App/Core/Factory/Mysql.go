@@ -1,19 +1,17 @@
 //Email: 120235331@qq.com
 //Github: http：//www.github.com/siaoynli
-//Date: 2020/5/14 12:02
+//Date: 2020/5/14 13:58
 
 package Factory
 
 import (
 	"database/sql"
-	"fmt"
 	"go-gin-project/App/Global/Errors"
 	"go-gin-project/App/Utils/Config"
 	"log"
 	"time"
 )
 
-// 初始化数据库驱动
 func InitSqlDriver() *sql.DB {
 	configFac := Config.CreateYamlFactory()
 	DbType := configFac.GetString("DbType")
@@ -26,7 +24,6 @@ func InitSqlDriver() *sql.DB {
 	SetMaxIdleConns := configFac.GetInt("Mysql.SetMaxIdleConns")
 	SetMaxOpenConns := configFac.GetInt("Mysql.SetMaxOpenConns")
 	SetConnMaxLifetime := configFac.GetDuration("Mysql.SetConnMaxLifetime")
-	fmt.Println(DbType, string(User)+":"+Pass+"@tcp("+Host+":"+Port+")/"+DataBase+"?parseTime=True&loc=Local&charset="+Charset)
 	db, err := sql.Open(DbType, string(User)+":"+Pass+"@tcp("+Host+":"+Port+")/"+DataBase+"?parseTime=True&loc=Local&charset="+Charset)
 	if err != nil {
 		log.Fatal(Errors.Errors_Db_SqlDriverInitFail)
@@ -61,4 +58,3 @@ func GetOneEffectivePing() *sql.DB {
 	}
 	return vDbDriver
 }
-

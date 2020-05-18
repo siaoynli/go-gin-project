@@ -11,7 +11,7 @@ import (
 )
 
 func InitRouter() *gin.Engine{
-	gin.DisableConsoleColor()
+	//gin.DisableConsoleColor()
 	router := gin.Default()
 	//注册中间件
 	//处理静态资源（不建议gin框架处理静态资源，参见 Public/readme.md 说明 ）
@@ -19,7 +19,10 @@ func InitRouter() *gin.Engine{
 	router.StaticFS("/dir", http.Dir("./Public"))    // 将Public目录内的文件列举展示
 	router.StaticFile("/readme", "./Public/readme.md") // 可以根据文件名绑定需要返回的文件名
 
-	router.POST("/login", (&Controllers.Users{}).Login)
+	router.GET("/users", (&Controllers.Users{}).All)
+	router.GET("/user/:id", (&Controllers.Users{}).Index)
+	router.POST("/user/create", (&Controllers.Users{}).Create)
+	router.DELETE("/user/delete/:id", (&Controllers.Users{}).Delete)
 
 	return router
 }

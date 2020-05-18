@@ -4,42 +4,33 @@
 
 package main
 
-import (
-	"fmt"
-	"reflect"
-)
+import "fmt"
 
-type Login struct {
-	User     string `form:"user" validate:"required,min=5,max=20"`
-	Password string `form:"password" validate:"required,min=5,max=20"`
+func bin_search(num []int,search_data int) int{
+    min:=0
+    max:=len(num)-1
+    for min<=max {
+		mid:=(min+max)/2
+		if  mid > search_data {
+			max=mid
+		}else if mid < search_data {
+			min= mid
+		}else{
+			return  mid
+		}
+	}
+	return -1
 }
 
 
+
 func main() {
-	value := reflect.ValueOf(Login{User: "lee",Password:"123456"})
+	  var a = make([]int,1024*1024*1024,1024*1024*1024)
+	  for i:=0;i<1024*1024*1024;i++ {
+	  	   a[i]=i+1
+	  }
 
-	fmt.Println(value)
-	v := value
+	  index:= bin_search(a,10235623543245)
 
-	if value.Kind() ==  reflect.Ptr {
-		v =value.Elem()
-	}
-	fmt.Println(v.Type().Name())
-	Name, _ := v.Type().FieldByName("User")
-	fmt.Println(Name.Tag.Get("form"))
-	for i := 0; i < v.Type().NumField(); i++ {
-		typeField := v.Type().Field(i)
-		valueField := v.Field(i)
-		value := valueField.Interface()
-		fmt.Printf("fieldName :[%s], fieldValue :[%s] tag :[%s]\n", typeField.Name, value, typeField.Tag)
-
-		switch vv := value.(type) {
-		case int:
-			fmt.Printf("this is a int : %d\n", vv)
-		case string:
-			fmt.Println("this is a string : " + vv)
-		default:
-			fmt.Println("other value")
-		}
-	}
+	  fmt.Println("查找到",index, a[index])
 }

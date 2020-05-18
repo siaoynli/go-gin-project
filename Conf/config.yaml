@@ -5,7 +5,6 @@ Mysql:
   Host: '127.0.0.1'
   DataBase: 'db_stocks'
   Port: 3306 #注意，非3306，请自行调整
-  Prefix: 'tb_'
   User: 'root'
   Pass: 'root'
   Charset: 'utf8'
